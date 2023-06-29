@@ -1,22 +1,31 @@
 package com.example.lab1_ph44245.model;
 
-public class khoahoc {
+public class congviec {
+    private int id;
     private String title;
     private String content;
     private String date;
     private int type;
+    private int trangThai;
 
+    public congviec() {
+    }
 
-    public khoahoc(String title, String content, String date, int type) {
-
+    public congviec(int id, String title, String content, String date, int type, int trangThai) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.type = type;
+        this.trangThai = trangThai;
     }
 
-    public khoahoc() {
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -49,5 +58,13 @@ public class khoahoc {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
 }

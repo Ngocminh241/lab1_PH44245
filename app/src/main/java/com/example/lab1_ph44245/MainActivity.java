@@ -6,14 +6,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.lab1_ph44245.adapter.listadapter;
-import com.example.lab1_ph44245.database.congviecDAO;
-import com.example.lab1_ph44245.model.khoahoc;
+import com.example.lab1_ph44245.adapter.congviecadapter;
+import com.example.lab1_ph44245.dao.congviecDAO;
+import com.example.lab1_ph44245.model.congviec;
 
 import java.util.ArrayList;
 
@@ -21,12 +21,11 @@ public class MainActivity extends AppCompatActivity {
     EditText edttile, edtcontent, edtdate, edttype;
     Button btnadd, btnupdate, btndelete;
     ListView lstview;
-    ArrayList<String> list = new ArrayList<>();
-    ArrayList<khoahoc> listkh = new ArrayList<>();
+    private ArrayList<congviec> list = new ArrayList<congviec>();
     congviecDAO cvDAO;
-    Context context = this;
-
-listadapter adapter;
+    Context context;
+    congviec cv;
+    congviecadapter adapter;
 
     @SuppressLint("MissingInflatedId")
 
@@ -46,29 +45,39 @@ listadapter adapter;
         //
         lstview = findViewById(R.id.lstview);
         //
-        cvDAO = new congviecDAO(context);
+        cvDAO = new congviecDAO(this);
+//        list.clear();
         list.clear();
-        listkh.clear();
-        listkh=cvDAO.getListCV();
-        for (khoahoc kh: listkh){
-            list.add(kh.getTitle()+" - "+kh.getContent()+" - "+kh.getDate()+" - "+kh.getType());
+        list=cvDAO.selectAll();
+        for (congviec kh: list){
+//            list.add(kh.getId()+" - "+ kh.getTitle()+" - "+kh.getContent()+" - "+kh.getDate()+" - "+kh.getType()+" - "+kh.getTrangThai());
         }
-        adapter = new listadapter(this,listkh);
+        adapter = new congviecadapter(this,list);
         lstview.setAdapter(adapter);
+        lstview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                cv = list.get(i);//truy vấn đến đối tượng được chọn
+                edttile.setText(cv.getTitle());
+                edtcontent.setText(cv.getContent());
+                edtdate.setText(cv.getDate());
+                edttype.setText(String.valueOf(cv.getType()));
+            }
+        });
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                khoahoc khoah = new khoahoc();
+                congviec khoah = new congviec();
                 khoah.setTitle(edttile.getText().toString());
                 khoah.setContent(edtcontent.getText().toString());
                 khoah.setDate(edtdate.getText().toString());
                 khoah.setType(Integer.parseInt(edttype.getText().toString()));
                 cvDAO.addkhoahoc(khoah);
+//                list.clear();
                 list.clear();
-                listkh.clear();
-                listkh=cvDAO.getListCV();
-                for (khoahoc kh: listkh){
-                    list.add(kh.getTitle()+" - "+kh.getContent()+" - "+kh.getDate()+" - "+kh.getType());
+                list=cvDAO.selectAll();
+                for (congviec kh: list){
+//                    list.add(kh.getId()+" - "+ kh.getTitle()+" - "+kh.getContent()+" - "+kh.getDate()+" - "+kh.getType()+" - "+kh.getTrangThai());
                 }
                 adapter.notifyDataSetChanged();
             }

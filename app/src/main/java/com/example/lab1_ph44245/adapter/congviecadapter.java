@@ -1,26 +1,23 @@
 package com.example.lab1_ph44245.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.lab1_ph44245.R;
-import com.example.lab1_ph44245.model.khoahoc;
+import com.example.lab1_ph44245.model.congviec;
 
 import java.util.ArrayList;
 
-public class listadapter extends BaseAdapter {
+public class congviecadapter extends BaseAdapter {
     final private Context context;
-    final private ArrayList<khoahoc> list;
+    final private ArrayList<congviec> list;
 
-    public listadapter(Context context, ArrayList<khoahoc> list) {
+    public congviecadapter(Context context, ArrayList<congviec> list) {
         this.context = context;
         this.list = list;
     }

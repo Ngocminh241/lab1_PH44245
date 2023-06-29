@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
     public static final String Db_name = "QLCV";
     public DBHelper(Context context){
-        super(context, Db_name, null, 1);
+        super(context, Db_name, null, 2);
     }
     //tạo bảng
     @Override
